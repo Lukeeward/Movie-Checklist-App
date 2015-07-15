@@ -33,6 +33,7 @@
     </head>
     <body>
         <div ng-controller="AppCtrl" layout="column">
+            <!-- Toolbar -->
             <div ng-controller="AutoCtrl as ctrl" class="autocompletedemoBasicUsage">
                 <md-toolbar>
                     <div class="md-toolbar-tools">
@@ -49,15 +50,16 @@
                         </md-autocomplete>
                     </div>
                 </md-toolbar>
+            <!-- Check List -->
+                <md-list>
+                    <md-list-item ng-repeat="topping in toppings" ng-show="topping.visible">
+                        <p> {{ topping.name }} </p>
+                        <md-checkbox class="md-secondary" ng-model="topping.wanted"></md-checkbox>
+                    </md-list-item>
+                </md-list>
             </div>
-            <md-list ng-controller="ListCtrl">
-                <md-list-item ng-repeat="topping in toppings">
-                    <p> {{ topping.name }} </p>
-                    <md-checkbox class="md-secondary" ng-model="topping.wanted"></md-checkbox>
-                </md-list-item>
-            </md-list>
             <!--Side Nav -->
-            <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-mg')">
+            <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
                 <md-toolbar class="md-theme-indigo">
                     <h1 class="md-toolbar-tools">Sidenav Left</h1>
                 </md-toolbar>

@@ -20,7 +20,7 @@
   'use strict';
   angular
       .module('MovieChecklist', ['ngMaterial'])
-      .controller('AutoCtrl', AutoCtrl)
+      .controller('AutoCtrl', AutoCtrl) /*Autocomplete controller*/
       .controller('AppCtrl', function ($scope, $timeout, $mdSidenav, $mdUtil, $log) {
     $scope.toggleLeft = buildToggler('left');
     $scope.toggleRight = buildToggler('right');
@@ -47,6 +47,7 @@
         });
     };
   })
+  /*list controller*/
   .controller('ListCtrl', function($scope, $mdDialog) {
   $scope.toppings = [
     { name: 'Pepperoni', wanted: true },
@@ -54,22 +55,18 @@
     { name: 'Black Olives', wanted: true },
     { name: 'Green Peppers', wanted: false }
   ]});
-  function AutoCtrl ($timeout, $q, $log) {
+
+  function AutoCtrl ($timeout, $q, $log, $scope) {
     var self = this;
     self.simulateQuery = false;
     self.isDisabled    = false;
     // list of `state` value/display objects
     self.states        = loadAll();
+    $scope.toppings = loadAll();
     self.querySearch   = querySearch;
     self.selectedItemChange = selectedItemChange;
     self.searchTextChange   = searchTextChange;
-    // ******************************
-    // Internal methods
-    // ******************************
-    /**
-     * Search for states... use $timeout to simulate
-     * remote dataservice call.
-     */
+
     function querySearch (query) {
       var results = query ? self.states.filter( createFilterFor(query) ) : self.states,
           deferred;
@@ -91,6 +88,7 @@
      * Build `states` list of key/value pairs
      */
     function loadAll() {
+      /* Load all movies and display list checkboxes */
       var allStates = 'Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware,\
               Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana,\
               Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana,\
@@ -100,8 +98,9 @@
               Wisconsin, Wyoming';
       return allStates.split(/, +/g).map( function (state) {
         return {
-          value: state.toLowerCase(),
-          display: state
+          name: state.toLowerCase(),
+          wanted: true,
+          visible: true
         };
       });
     }
