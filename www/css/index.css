@@ -111,3 +111,9 @@ h1 {
 md-autocomplete{
     width: 100%;
 }
+
+.face {
+  border-radius: 30px;
+  border: 1px solid #ddd;
+  width: 48px;
+  margin: 16px; }

@@ -53,8 +53,10 @@
             <!-- Check List -->
                 <md-list>
                     <md-list-item ng-repeat="topping in toppings" ng-show="topping.visible">
-                        <p> {{ topping.name }} </p>
+                        <img ng-src="img/50x50.gif" class="face">
+                        <p class="md-list-item-text"> {{ topping.name }} </p>
                         <md-checkbox class="md-secondary" ng-model="topping.wanted"></md-checkbox>
+                        <md-divider md-inset ng-if="!$last"></md-divider>
                     </md-list-item>
                 </md-list>
             </div>
@@ -67,10 +69,6 @@
                     <md-button ng-click="close()" class="md-primary" hide-gt-md>
                         Close Sidenav Left
                     </md-button>
-                    <p hide-md show-gt-md>
-                        This sidenav is locked open on your device. To go back to the default behavior,
-                        narrow your display.
-                    </p>
                 </md-content>
             </md-sidenav>
         </div>

@@ -46,16 +46,7 @@
           console.log("close LEFT is done");
         });
     };
-  })
-  /*list controller*/
-  .controller('ListCtrl', function($scope, $mdDialog) {
-  $scope.toppings = [
-    { name: 'Pepperoni', wanted: true },
-    { name: 'Sausage', wanted: false },
-    { name: 'Black Olives', wanted: true },
-    { name: 'Green Peppers', wanted: false }
-  ]});
-
+  });
   function AutoCtrl ($timeout, $q, $log, $scope) {
     var self = this;
     self.simulateQuery = false;
@@ -110,7 +101,7 @@
     function createFilterFor(query) {
       var lowercaseQuery = angular.lowercase(query);
       return function filterFn(state) {
-        return (state.value.indexOf(lowercaseQuery) === 0);
+        return (state.name.toLowerCase().indexOf(lowercaseQuery) === 0);
       };
     }
   }
