@@ -20,7 +20,40 @@
   'use strict';
   angular
       .module('MovieChecklist', ['ngMaterial'])
-      .controller('AutoCtrl', AutoCtrl);
+      .controller('AutoCtrl', AutoCtrl)
+      .controller('AppCtrl', function ($scope, $timeout, $mdSidenav, $mdUtil, $log) {
+    $scope.toggleLeft = buildToggler('left');
+    $scope.toggleRight = buildToggler('right');
+    /**
+     * Build handler to open/close a SideNav; when animation finishes
+     * report completion in console
+     */
+    function buildToggler(navID) {
+      var debounceFn =  $mdUtil.debounce(function(){
+            $mdSidenav(navID)
+              .toggle()
+              .then(function () {
+                console.log("toggle " + navID + " is done");
+              });
+          },300);
+      return debounceFn;
+    }
+  })
+  .controller('LeftCtrl', function ($scope, $timeout, $mdSidenav, $log) {
+    $scope.close = function () {
+      $mdSidenav('left').close()
+        .then(function () {
+          console.log("close LEFT is done");
+        });
+    };
+  })
+  .controller('ListCtrl', function($scope, $mdDialog) {
+  $scope.toppings = [
+    { name: 'Pepperoni', wanted: true },
+    { name: 'Sausage', wanted: false },
+    { name: 'Black Olives', wanted: true },
+    { name: 'Green Peppers', wanted: false }
+  ]});
   function AutoCtrl ($timeout, $q, $log) {
     var self = this;
     self.simulateQuery = false;
@@ -83,7 +116,7 @@
     }
   }
 })();
- 
+
 var app = {
     // Application Constructor
     initialize: function() {
@@ -105,13 +138,6 @@ var app = {
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
         console.log('Received Event: ' + id);
     }
 };

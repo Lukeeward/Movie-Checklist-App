@@ -32,17 +32,47 @@
         <title>Hello World</title>
     </head>
     <body>
-        <div ng-controller="AutoCtrl as ctrl" layout="column" class="autocompletedemoBasicUsage">
-          <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item)" md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0" placeholder="Enter movie title.">
-            <md-item-template>
-              <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
-            </md-item-template>
-            <md-not-found>
-              No matches found for "{{ctrl.searchText}}".
-            </md-not-found>
-          </md-autocomplete>
+        <div ng-controller="AppCtrl" layout="column">
+            <div ng-controller="AutoCtrl as ctrl" class="autocompletedemoBasicUsage">
+                <md-toolbar>
+                    <div class="md-toolbar-tools">
+                        <md-button class="md-icon-button" aria-label="Menu" ng-click="toggleLeft()">
+                            <ng-md-icon>X</ng-md-icon>
+                        </md-button>
+                        <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item)" md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0" placeholder="Enter movie title.">
+                            <md-item-template>
+                              <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+                            </md-item-template>
+                            <md-not-found>
+                              No matches found for "{{ctrl.searchText}}".
+                            </md-not-found>
+                        </md-autocomplete>
+                    </div>
+                </md-toolbar>
+            </div>
+            <md-list ng-controller="ListCtrl">
+                <md-list-item ng-repeat="topping in toppings">
+                    <p> {{ topping.name }} </p>
+                    <md-checkbox class="md-secondary" ng-model="topping.wanted"></md-checkbox>
+                </md-list-item>
+            </md-list>
+            <!--Side Nav -->
+            <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-mg')">
+                <md-toolbar class="md-theme-indigo">
+                    <h1 class="md-toolbar-tools">Sidenav Left</h1>
+                </md-toolbar>
+                <md-content layout-padding ng-controller="LeftCtrl">
+                    <md-button ng-click="close()" class="md-primary" hide-gt-md>
+                        Close Sidenav Left
+                    </md-button>
+                    <p hide-md show-gt-md>
+                        This sidenav is locked open on your device. To go back to the default behavior,
+                        narrow your display.
+                    </p>
+                </md-content>
+            </md-sidenav>
         </div>
-            <!-- Angular Material Dependencies -->
+        <!-- Angular Material Dependencies -->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
