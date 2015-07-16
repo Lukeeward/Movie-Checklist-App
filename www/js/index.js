@@ -66,7 +66,8 @@
         $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
         return deferred.promise;
       } else {
-        return results;
+        $scope.toppings = results;
+        return null;
       }
     }
     function searchTextChange(text) {
