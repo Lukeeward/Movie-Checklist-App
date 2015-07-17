@@ -47,13 +47,13 @@
         });
     };
   });
-  function AutoCtrl ($timeout, $q, $log, $scope) {
+  function AutoCtrl ($timeout, $q, $log, $scope, $http) {
     var self = this;
     self.simulateQuery = false;
     self.isDisabled    = false;
     // list of `state` value/display objects
-    self.states        = loadAll();
-    $scope.toppings = loadAll();
+    self.states        = loadAll($http);
+    $scope.toppings = loadAll($http);
     self.querySearch   = querySearch;
     self.selectedItemChange = selectedItemChange;
     self.searchTextChange   = searchTextChange;
@@ -79,22 +79,17 @@
     /**
      * Build `states` list of key/value pairs
      */
-    function loadAll() {
+    function loadAll($http) {
       /* Load all movies and display list checkboxes */
-      var allStates = 'Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware,\
-              Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana,\
-              Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana,\
-              Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina,\
-              North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina,\
-              South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia,\
-              Wisconsin, Wyoming';
-      return allStates.split(/, +/g).map( function (state) {
-        return {
-          name: state.toLowerCase(),
-          wanted: true,
-          visible: true
-        };
+      var log = [];
+    $http.get("http://www.myapifilms.com/imdb/top?format=JSON&start=1&end=250&data=S&token=4a9e6847-5a3e-4d48-9a32-440ecd5b9df7")
+      .success(function(response){
+        /*TODO: use for instead of for each*/
+        angular.forEach(response, function(value, key){
+          this.push({name: value.title, wanted: true, visible: true});
+        }, log);
       });
+      return log;
     }
     /**
      * Create filter function for a query string
