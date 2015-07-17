@@ -51,22 +51,21 @@
     var self = this;
     self.simulateQuery = false;
     self.isDisabled    = false;
-    // list of `state` value/display objects
-    self.states        = loadAll($http);
-    $scope.toppings = loadAll($http);
+    self.movies        = loadAll($http);
+    $scope.movies      = self.movies
     self.querySearch   = querySearch;
     self.selectedItemChange = selectedItemChange;
     self.searchTextChange   = searchTextChange;
 
     function querySearch (query) {
-      var results = query ? self.states.filter( createFilterFor(query) ) : self.states,
+      var results = query ? self.movies.filter( createFilterFor(query) ) : self.movies,
           deferred;
       if (self.simulateQuery) {
         deferred = $q.defer();
         $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
         return deferred.promise;
       } else {
-        $scope.toppings = results;
+        $scope.movies = results;
         return null;
       }
     }
@@ -76,9 +75,6 @@
     function selectedItemChange(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
     }
-    /**
-     * Build `states` list of key/value pairs
-     */
     function loadAll($http) {
       /* Load all movies and display list checkboxes */
       var log = [];
