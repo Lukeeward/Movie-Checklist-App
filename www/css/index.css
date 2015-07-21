@@ -104,3 +104,29 @@ md-autocomplete{
   border: 1px solid #ddd;
   width: 48px;
   margin: 16px; }
+
+.dark {
+    background-color: black;
+    filter:alpha(opacity=50); /* IE */
+    opacity: 0.5; /* Safari, Opera */
+    -moz-opacity:0.50; /* FireFox */
+    z-index: 20;
+    height: 100%;
+    width: 100%;
+    background-repeat:no-repeat;
+    background-position:center;
+    position:absolute;
+    top: 0;
+    left:0;
+}
+
+.loading{
+    margin-top: 50%;
+    margin-left: 50%;
+
+}
+
+.toptop{
+    z-index: 200;
+
+}

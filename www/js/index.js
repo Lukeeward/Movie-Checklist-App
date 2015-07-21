@@ -56,7 +56,8 @@
     self.querySearch   = querySearch;
     self.selectedItemChange = selectedItemChange;
     self.searchTextChange   = searchTextChange;
-
+    $("#darkLayer").hide();
+    console.log("hiding");
     function querySearch (query) {
       var results = query ? self.movies.filter( createFilterFor(query) ) : self.movies,
           deferred;
@@ -78,6 +79,8 @@
     function loadAll($http) {
       /* Load all movies and display list checkboxes */
       var log = [];
+      $("#darkLayer").show();
+      console.log("showing");
     $http.get("http://www.myapifilms.com/imdb/top?format=JSON&start=1&end=250&data=S&token=4a9e6847-5a3e-4d48-9a32-440ecd5b9df7")
       .success(function(response){
         /*TODO: use for instead of for each*/
