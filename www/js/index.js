@@ -19,7 +19,7 @@
 (function () {
   'use strict';
   angular
-      .module('MovieChecklist', ['ngMaterial'])
+      .module('MovieChecklist', ['ngMaterial','infinite-scroll'])
       .controller('AutoCtrl', AutoCtrl) /*Autocomplete controller*/
       .controller('AppCtrl', function ($scope, $timeout, $mdSidenav, $mdUtil, $log) {
     $scope.toggleLeft = buildToggler('left');
@@ -46,7 +46,17 @@
           console.log("close LEFT is done");
         });
     };
-  });
+  })
+  .directive("repeatEnd", function(){
+            return {
+                restrict: "A",
+                link: function (scope, element, attrs) {
+                    if (scope.$last) {
+                        scope.$eval(attrs.repeatEnd);
+                    }
+                }
+            };
+        });
   function AutoCtrl ($timeout, $q, $log, $scope, $http) {
     var self = this;
     self.simulateQuery = false;
@@ -56,8 +66,16 @@
     self.querySearch   = querySearch;
     self.selectedItemChange = selectedItemChange;
     self.searchTextChange   = searchTextChange;
-    $("#darkLayer").hide();
-    console.log("hiding");
+    var test;
+    $scope.onEnd = function(){
+                  $("#darkLayer").hide();
+                  console.log("hiding");
+                  var nowdate = new Date();
+                  var wutwut 
+                  console.log("----------------------------------")
+                  console.log(Math.abs(nowdate - test) / 1000);
+                  console.log("done!!!!!!!:)");
+            };
     function querySearch (query) {
       var results = query ? self.movies.filter( createFilterFor(query) ) : self.movies,
           deferred;
@@ -67,7 +85,7 @@
         return deferred.promise;
       } else {
         $scope.movies = results;
-        return null;
+        return "";
       }
     }
     function searchTextChange(text) {
@@ -85,9 +103,10 @@
       .success(function(response){
         /*TODO: use for instead of for each*/
         angular.forEach(response, function(value, key){
-          this.push({name: value.title, wanted: true, visible: true});
+          this.push({name: value.title, wanted: true});
         }, log);
       });
+      test = new Date();
       return log;
     }
     /**

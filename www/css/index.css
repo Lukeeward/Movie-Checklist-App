@@ -126,6 +126,10 @@ md-autocomplete{
 
 }
 
+.md-ripple-container, .md-ripple-placed {
+    transition: none;
+}
+
 .toptop{
     z-index: 200;
 

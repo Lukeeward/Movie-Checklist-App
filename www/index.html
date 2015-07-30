@@ -40,7 +40,7 @@
                         <md-button class="md-icon-button" aria-label="Menu" ng-click="toggleLeft()">
                             <ng-md-icon>X</ng-md-icon>
                         </md-button>
-                        <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item)" md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0" placeholder="Enter movie title.">
+                        <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item)" md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0" placeholder="Enter movie title." md-no-ink>
                             <md-item-template>
                                 <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
                             </md-item-template>
@@ -53,15 +53,17 @@
             <!-- Check List -->
                 <md-list>
                 <div id="darkLayer" class="dark" style="display:none;">
-                    <md-progress-circular md-mode="indeterminate" class="loading"></md-progress-circular>
+                    <md-progress-circular md-mode="indeterminate" class="loading">Loading List...</md-progress-circular>
                 </div>
                 <!--change ng-repeat due to performance issues + issue call back to stop loading spinner-->
-                    <md-list-item ng-repeat="movie in movies" ng-show="movie.visible">
+                <div infinite-scroll="myPagingFunction()" infinite-scroll-distance="1">
+                    <md-list-item md-no-ink ng-repeat="movie in movies" repeat-end="onEnd()">
                         <img ng-src="img/50x50.gif" class="face">
-                        <p class="md-list-item-text"> {{ movie.name }} </p>
-                        <md-checkbox class="md-secondary" ng-model="movie.wanted"></md-checkbox>
+                        <p class="md-list-item-text"> {{ ::movie.name }} </p>
+                        <md-checkbox ng-model="::movie.wanted" md-no-ink></md-checkbox>
                         <md-divider md-inset ng-if="!$last"></md-divider>
                     </md-list-item>
+                </div>
                 </md-list>
             </div>
             <!--Side Nav -->
@@ -77,13 +79,14 @@
             </md-sidenav>
         </div>
         <!-- Angular Material Dependencies -->
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.js"></script>
-        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/infinatescroll.min.js"></script>
         <script type="text/javascript">
             app.initialize();
         </script>
